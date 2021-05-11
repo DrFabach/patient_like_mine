@@ -122,3 +122,13 @@ term_PR<-c("poliarthrite rhumatoide",
 
 a<-extraction_context(entities = term_PR,text = c("Le patient est atteint de polyarthrite rhumatoide. ec",
                                                   "Le patient ne présente pas de signe de polyartrite rhumatoide"))
+
+exploration_regex<- function(texte, pattern){
+  texte<- tolower(texte)
+  pattern<- tolower(pattern)
+  texte<- texte[str_detect(texte, pattern)]
+  
+  retour<- sub(paste0("(.*[ ,.;:\\(\\{\r\n\\?\\)\\/\\-\\+]|^)(.*?",pattern,".*?)([ ,.;:\\(\\{\r\n\\?\\)\\/\\-\\+].*|$)"),"\\2",
+               texte)
+  
+}
