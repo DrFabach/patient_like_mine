@@ -1,5 +1,5 @@
 extraction_context<- function(entities, text,path_fastContext=NULL, path_IAMsystemFastContext=NULL,sentence_tokenizer=NULL,
-                      suppression_partie_atcd = T){
+                              suppression_partie_atcd = T){
   
   
   if(suppression_partie_atcd){
@@ -32,7 +32,10 @@ extraction_context<- function(entities, text,path_fastContext=NULL, path_IAMsyst
     
     phrases<-unlist(strsplit(text[i], sentence_tokenizer, perl=T))
     phrases<- phrases[nchar(phrases)>3]
-    
+    if(length(phrases)==0) {
+      data.frame(dictLabel="NA", phrase=0)
+      list_res[[i]]<-data.frame(id= i )
+    }else{
     
     context_j<- vector("list", length("phrases"))
     for(j in seq_along(phrases)){
@@ -60,7 +63,7 @@ extraction_context<- function(entities, text,path_fastContext=NULL, path_IAMsyst
             ) %>%
               jsonlite::fromJSON(flatten = T)
           )$ct,phrase=j)
-        
+      }
       }
     }
     
